@@ -14,15 +14,6 @@
     max-width: 90%;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-}
-
-footer a {
-    color: #4aee88;
-}
-
 .inputGroup {
     display: flex;
     flex-direction: column;
