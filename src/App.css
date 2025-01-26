@@ -36,6 +36,8 @@ footer a {
 .homePageLogo {
     height: 80px;
     margin-bottom: 30px;
+    position: relative;
+    left: 40%;
 }
 
 .inputBox {
