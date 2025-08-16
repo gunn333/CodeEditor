@@ -4,49 +4,37 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-	const navigate = useNavigate();
-	const [roomId, setRoomId] = useState('');
-	const [username, setUsername] = useState('');
+    const navigate = useNavigate();
 
-	const createNewRoom = e => {
-		e.preventDefault();
-		const id = uuidV4();
-		setRoomId(id);
-		toast.success('Created a new room');
-	};
+    const [roomId, setRoomId] = useState('');
+    const [username, setUsername] = useState('');
+    const createNewRoom = (e) => {
+        e.preventDefault();
+        const id = uuidV4();
+        setRoomId(id);
+        toast.success('Created a new room');
+    };
 
-	const joinRoom = async () => {
-		if (!roomId || !username) {
-			toast.error('ROOM ID & username is required');
-			return;
-		}
+    const joinRoom = () => {
+        if (!roomId || !username) {
+            toast.error('ROOM ID & username is required');
+            return;
+        }
 
-		try {
-			const res = await fetch('http://localhost:5000/api/users/save', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ username, roomId })
-			});
+        // Redirect
+        navigate(`/editor/${roomId}`, {
+            state: {
+                username,
+            },
+        });
+    };
 
-			const data = await res.json();
-			if (!res.ok) {
-				toast.error(data.error || 'Failed to save user');
-				return;
-			}
-
-			toast.success('User info saved to DB');
-			navigate(`/editor/${roomId}`, { state: { username } });
-		} catch (err) {
-			toast.error('Server error');
-			console.error(err);
-		}
-	};
-
-	const handleInputEnter = e => {
-		if (e.code === 'Enter') joinRoom();
-	};
-
-	return (
+    const handleInputEnter = (e) => {
+        if (e.code === 'Enter') {
+            joinRoom();
+        }
+    };
+    return (
 		<div className="homePageWrapper">
 			<div className="formWrapper">
 				<img
@@ -60,26 +48,26 @@ const Home = () => {
 						type="text"
 						className="inputBox"
 						placeholder="ROOM ID"
-						value={roomId}
 						onChange={e => setRoomId(e.target.value)}
+						value={roomId}
 						onKeyUp={handleInputEnter}
 					/>
 					<input
 						type="text"
 						className="inputBox"
 						placeholder="USERNAME"
-						value={username}
 						onChange={e => setUsername(e.target.value)}
+						value={username}
 						onKeyUp={handleInputEnter}
 					/>
 					<button className="btn joinBtn" onClick={joinRoom}>
 						Join
 					</button>
 					<span className="createInfo">
-						If you don't have an invite then create&nbsp;
+						If you don't have an invite then create &nbsp;
 						<a
 							onClick={createNewRoom}
-							href="/"
+							href=""
 							className="createNewBtn"
 						>
 							new room

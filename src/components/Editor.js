@@ -18,11 +18,11 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
 					theme: 'dracula',
 					autoCloseTags: true,
 					autoCloseBrackets: true,
-					lineNumbers: true,
-					tabSize: 2
+					lineNumbers: true
 				}
 			);
 
+			// Fixed Default Code for every room
 			editorRef.current.setValue('// Type your code here!!');
 
 			editorRef.current.on('change', (instance, changes) => {
